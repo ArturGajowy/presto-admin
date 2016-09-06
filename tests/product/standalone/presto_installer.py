@@ -33,13 +33,14 @@ PACKAGE_NAME = 'presto-server-rpm'
 
 
 class StandalonePrestoInstaller(BaseInstaller):
-    def __init__(self, testcase, rpm_location=None):
+    def __init__(self, testcase, rpm_location=None, check_rpm=True):
         if rpm_location:
             self.rpm_dir, self.rpm_name = rpm_location
         else:
             self.rpm_dir, self.rpm_name = self._detect_presto_rpm()
 
         self.testcase = testcase
+        self.check_rpm = check_rpm
 
     @staticmethod
     def get_dependencies():
@@ -96,8 +97,9 @@ class StandalonePrestoInstaller(BaseInstaller):
 
         rpm_path = os.path.join(self.rpm_dir, self.rpm_name)
         if not self._check_rpm_already_uploaded(self.rpm_name, cluster):
-            cluster.copy_to_host(rpm_path, cluster.master)
-        self._check_if_corrupted_rpm(self.rpm_name, cluster)
+            cluster.copy_to_host(rpm_path, cluster.master, os.path.join(cluster.get_rpm_cache_dir(), self.rpm_name))
+        if self.check_rpm:
+            self._check_if_corrupted_rpm(self.rpm_name, cluster)
         return self.rpm_name
 
     @staticmethod

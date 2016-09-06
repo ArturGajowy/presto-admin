@@ -297,7 +297,7 @@ class TestCollect(BaseProductTestCase):
         self.setup_cluster(NoHadoopBareImageProvider(), STANDALONE_PRESTO_CLUSTER)
         self.run_prestoadmin('server start')
         self.cluster.write_content_to_host('Stuff that I logged!',
-                                           'var/log/presto/server.log-2',
+                                           '/var/log/presto/server.log-2',
                                            self.cluster.master)
         actual = self.run_prestoadmin('collect logs')
 

@@ -31,7 +31,7 @@ class TestServerUpgrade(BaseProductTestCase):
         self.setup_cluster(NoHadoopBareImageProvider(), STANDALONE_PRESTO_CLUSTER)
         self.dummy_installer = StandalonePrestoInstaller(
             self, (os.path.join(prestoadmin.main_dir, 'tests', 'product',
-                                'resources'), 'dummy-rpm.rpm'))
+                                'resources'), 'dummy-rpm.rpm'), False)
         self.real_installer = StandalonePrestoInstaller(self)
 
     def start_and_assert_started(self):
@@ -106,7 +106,7 @@ class TestServerUpgrade(BaseProductTestCase):
 
     def copy_upgrade_rpm_to_cluster(self):
         rpm_name = self.dummy_installer.copy_presto_rpm_to_master()
-        return os.path.join(self.cluster.mount_dir, rpm_name)
+        return os.path.join(self.cluster.get_rpm_cache_dir(), rpm_name)
 
     def test_upgrade_fails_given_directory(self):
         dir_on_cluster = '/opt/prestoadmin'
