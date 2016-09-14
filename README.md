@@ -1,4 +1,4 @@
-# presto-admin [![Build Status](https://travis-ci.org/prestodb/presto-admin.svg?branch=master)](https://travis-ci.org/prestodb/presto-admin)
+# presto-admin [![Build Status](https://travis-ci.org/ArturGajowy/presto-admin.svg?branch=master)](https://travis-ci.org/ArturGajowy/presto-admin)
 
 presto-admin installs, configures, and manages Presto installations.
 
